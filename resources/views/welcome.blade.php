@@ -13,25 +13,7 @@
   </head>
   <!--begin::Body-->
   <body id="kt_body" class="app-default">
-    <script>
-      var defaultThemeMode = "light";
-      var themeMode;
-      if (document.documentElement) {
-        if (document.documentElement.hasAttribute("data-theme-mode")) {
-          themeMode = document.documentElement.getAttribute("data-theme-mode");
-        } else {
-          if (localStorage.getItem("data-theme") !== null) {
-            themeMode = localStorage.getItem("data-theme");
-          } else {
-            themeMode = defaultThemeMode;
-          }
-        }
-        if (themeMode === "system") {
-          themeMode = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
-        }
-        document.documentElement.setAttribute("data-theme", themeMode);
-      }
-    </script>
+
     <!--begin::Root-->
     <div class="d-flex flex-column flex-root" id="kt_app_root">
       <!--begin::Authentication - Multi-steps-->
@@ -278,23 +260,37 @@
                     <!--end::Heading-->
                     <!--begin::Input group-->
                     <div class="mb-10 fv-row">
+                      <label class="form-label mb-3">RFC</label>
+                      <!--input type="text" class="form-control form-control-lg form-control-solid" name="txtRFC" autocomplete="off" /-->
+                      <div class="input-group">
+                        <input type="text" class="form-control form-control-solid" placeholder="Introduzca su RFC y haga click en el boton Autocompletar..." name="txtRFC" id="txtRFC" autocomplete="off">
+                        <button type="button" class="btn btn-light-primary" onclick="autoCompletar();">
+                            <span class="svg-icon svg-icon-2 ">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <rect opacity="0.5" x="17.0365" y="15.1223" width="8.15546" height="2" rx="1" transform="rotate(45 17.0365 15.1223)" fill="currentColor"></rect>
+                                <path d="M11 19C6.55556 19 3 15.4444 3 11C3 6.55556 6.55556 3 11 3C15.4444 3 19 6.55556 19 11C19 15.4444 15.4444 19 11 19ZM11 5C7.53333 5 5 7.53333 5 11C5 14.4667 7.53333 17 11 17C14.4667 17 17 14.4667 17 11C17 7.53333 14.4667 5 11 5Z" fill="currentColor"></path>
+                                </svg>
+                            </span>
+                            Autocompletar
+                        </button>
+                    </div>
+                    </div>
+                    <!--end::Input group-->
+                    
+                    <!--begin::Input group-->
+                    <div class="mb-10 fv-row">
                       <label class="form-label mb-3">Nombre ó Razón social</label>
                       <input type="text" class="form-control form-control-lg form-control-solid" name="txtRazonSocial" autocomplete="off" />
                     </div>
                     <!--end::Input group-->
-                    <!--begin::Input group-->
-                    <div class="mb-10 fv-row">
-                      <label class="form-label mb-3">RFC</label>
-                      <input type="text" class="form-control form-control-lg form-control-solid" name="txtRFC" autocomplete="off" />
-                    </div>
-                    <!--end::Input group-->
+                    
                     <!--begin::Input group-->
                     <div class="fv-row mb-10">
                       <!--begin::Label-->
                       <label class="form-label required">Régimen Fiscal</label>
                       <!--end::Label-->
                       <!--begin::Input-->
-                      <select name="cmbRegimenFiscal" class="form-select form-select-lg form-select-solid" data-control="select2" data-placeholder="Seleccione su régimen fiscal..." data-allow-clear="true" data-hide-search="true" onchange="getUsoCFDI(this.value)">
+                      <select name="cmbRegimenFiscal" id="cmbRegimenFiscal" class="form-select form-select-lg form-select-solid" data-control="select2" data-placeholder="Seleccione su régimen fiscal..." data-allow-clear="true" data-hide-search="true" onchange="getUsoCFDI(this.value)">
                         <option></option>
                         @foreach($sat_regimen as $sr)
                         <option value="{{$sr->id}}">{{$sr->cve_regimen}} - {{$sr->desc_regimen}}</option>
@@ -545,8 +541,8 @@
     <!--end::Global Javascript Bundle-->
     <!--begin::Custom Javascript(used for this page only)-->
     <script src="{{asset('assets/plugins/custom/fslightbox/fslightbox.bundle.js')}}"></script>
-    <script src="{{asset('assets/js/custom/utilities/modals/request-invoice.js?v1.5')}}"></script>
-    <script src="{{asset('assets/js/autofactura-gs/request-invoice.js?v1.5')}}"></script>
+    <script src="{{asset('assets/js/custom/utilities/modals/request-invoice.js?v1.7')}}"></script>
+    <script src="{{asset('assets/js/autofactura-gs/request-invoice.js?v1.7')}}"></script>
     <script>
     $(document).ready(()=>{
         $('[name="txtFechaCompra"]').flatpickr({

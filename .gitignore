@@ -3,3 +3,4 @@ public/assets-layout/media
 vendor
 tests
 storage
+.env

@@ -5,9 +5,12 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', 'solicitudFacturaController@index');
 Route::get('testApi','consultaFacturaController@escribeMensajeSIFOL');
+
 Route::group(["prefix"=>'autofactura'],function(){
   Route::post('getUsoCFDI','solicitudFacturaController@getUsoCFDI');
   Route::post('solicitaCFDI','solicitudFacturaController@solicitaCFDI');
+  Route::post('ticket/validar','solicitudFacturaController@validarTicket');
+  Route::post('clientes/get-info','clientesController@getInfo');
 });
 
 Route::group(["prefix" => 'cfdi'], function(){

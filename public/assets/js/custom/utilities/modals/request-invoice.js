@@ -6,12 +6,11 @@ var KTCreateAccount = function() {
             (e = document.querySelector("#kt_modal_create_account")) && new bootstrap.Modal(e), (t = document.querySelector("#kt_create_account_stepper")) && (i = t.querySelector("#kt_create_account_form"), o = t.querySelector('[data-kt-stepper-action="submit"]'), a = t.querySelector('[data-kt-stepper-action="next"]'), (r = new KTStepper(t)).on("kt.stepper.changed", (function(e) {
                 4 === r.getCurrentStepIndex() ? (o.classList.remove("d-none"), o.classList.add("d-inline-block"), a.classList.add("d-none")) : 5 === r.getCurrentStepIndex() ? (o.classList.add("d-none"), a.classList.add("d-none")) : (o.classList.remove("d-inline-block"), o.classList.remove("d-none"), a.classList.remove("d-none"))
             })), r.on("kt.stepper.next", (function(e) {
-                console.log("stepper.next");
                 var t = s[e.getCurrentStepIndex() - 1];
                 t ? t.validate().then((function(t) {
-                    console.log("validated!"), "Valid" == t ? (e.goNext(), KTUtil.scrollTop()) : Swal.fire({
+                    /*"Valid" == t ? (e.goNext(), KTUtil.scrollTop()) : Swal.fire({
                         text: "Lo sentimos, encontramos datos invalidos y/o faltantes, Por favor verifique su información e intentelo nuevamente.",
-                        icon: "error",
+                        icon: "warning",
                         buttonsStyling: !1,
                         confirmButtonText: "Ok, Entendido!",
                         customClass: {
@@ -19,10 +18,55 @@ var KTCreateAccount = function() {
                         }
                     }).then((function() {
                         KTUtil.scrollTop()
-                    }))
+                    }))*/
+                    if(t == "Valid"){
+                        if(e.getCurrentStepIndex() == 3){
+                            console.log('validando ticket');
+
+                            var _token      = $('input[name="_token"]').val();
+							var numTienda   = $('input[name="txtNumTienda"]').val();
+							var numCaja     = $('input[name="txtNumCaja"]').val();
+							var numTicket   = $('input[name="txtNumTicket"]').val();
+							var fechaTicket = $('input[name="txtFechaCompra"]').val();
+                            var montoTicket = $('input[name="txtMontoCompra"]').val();
+
+                            $.ajax({
+                                url:'/autofactura/ticket/validar',
+                                type:'post',
+                                data:{_token: _token, numTienda, numCaja, numTicket, fechaTicket, montoTicket:montoTicket},
+                            
+                            
+                                beforeSend:()=>{
+
+                                },
+                                success:(response)=>{
+                                    (response.TMensaje == "success") ? e.goNext() : Swal.fire(response.Titulo,response.Mensaje,response.TMensaje);
+                                },
+                                error:(err)=>{
+                                    
+                                }
+                            });
+
+                        }else{
+                           
+                            e.goNext();
+                            KTUtil.scrollTop();
+                        }
+                        
+                    }else{
+                        Swal.fire({
+                            text: "Lo sentimos, encontramos datos invalidos y/o faltantes, Por favor verifique su información e intentelo nuevamente.",
+                            icon: "warning",
+                            buttonsStyling: !1,
+                            confirmButtonText: "Ok, Entendido!",
+                            customClass: {
+                                confirmButton: "btn btn-light"
+                            }
+                        });
+                    }
                 })) : (e.goNext(), KTUtil.scrollTop())
             })), r.on("kt.stepper.previous", (function(e) {
-                console.log("stepper.previous"), e.goPrevious(), KTUtil.scrollTop()
+                e.goPrevious(), KTUtil.scrollTop()
             })), s.push(FormValidation.formValidation(i, {
                 fields: {
                     account_type: {
@@ -212,7 +256,7 @@ var KTCreateAccount = function() {
                         });
                     }), 2e3)) : Swal.fire({
                         text: "Lo sentimos, encontramos datos invalidos y/o faltantes, Por favor verifique su información e intentelo nuevamente.",
-                        icon: "error",
+                        icon: "warning",
                         buttonsStyling: !1,
                         confirmButtonText: "Ok, Entendido!",
                         customClass: {

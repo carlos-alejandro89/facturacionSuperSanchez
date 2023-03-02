@@ -9,7 +9,7 @@ class facturacion extends Model
 {
     use HasFactory;
     protected $table = 'facturacion';
-    protected $appends = ['regimen','usoCfdi'];
+    protected $appends = ['regimen','usoCfdi','estatus'];
 
     public function getRegimenAttribute(){
         return $this->hasOne(sat_regimen_fiscal::class,'id','regimen_id')->first();
@@ -17,6 +17,10 @@ class facturacion extends Model
 
     public function getUsoCfdiAttribute(){
         return $this->hasOne(sat_uso_cfdi::class,'id','uso_cfdi_id')->first();
+    }
+
+    public function getEstatusAttribute(){
+        return $this->hasOne(estatus::class,'id','estatus_id')->first();
     }
 
     public function scopeGetFacturasCliente($query, $rfc, $correo){

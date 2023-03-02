@@ -8,6 +8,7 @@ use App\Models\sat_regimen_fiscal;
 use App\Models\sat_uso_cfdi;
 use App\Models\sat_regimen_uso_cfdi;
 use App\Models\motivos_declina_solicitud;
+use App\Models\articulos_tae;
 
 class DatabaseSeeder extends Seeder
 {
@@ -358,6 +359,13 @@ class DatabaseSeeder extends Seeder
         motivos_declina_solicitud::insert(['id'=>5,'motivo'=>'ERROR EN RFC Y/O RAZON SOCIAL','detalle_motivo' => 'La Razón social y el RFC no corresponden entre sí. Esto con base en la información registrada en el SAT']);
         motivos_declina_solicitud::insert(['id'=>6,'motivo'=>'ERROR EN DIRECCIÓN FISCAL','detalle_motivo' => 'La dirección físcal (código postal) no corresponde con los datos del SAT']);
         motivos_declina_solicitud::insert(['id'=>7,'motivo'=>'ERROR EN RÉGIMEN FISCAL','detalle_motivo' => 'El régimen físcal que proporcionó no corresponde con los datos registrados ante el SAT']);
+
+        $articulosTae = json_decode(file_get_contents(public_path('articulos-tae.json')));
+        $x = 1;
+        foreach($articulosTae as $a){
+            articulos_tae::insert(['id'=>$x,'cve_sap' => $a->cve_articulo,'descripcion' => $a->descripcion]);
+            $x++;
+        }
          
     }
 }
