@@ -182,11 +182,12 @@
                     <div class="fv-row">
                       <!--begin::Row-->
                       <div class="row">
+                        
                         <!--begin::Col-->
                         <div class="col-lg-6">
                           <!--begin::Option-->
-                          <input type="radio" class="btn-check" name="account_type" value="personal" checked="checked" id="kt_create_account_form_account_type_personal" />
-                          <label class="btn btn-outline btn-outline-dashed btn-active-light-primary p-7 d-flex align-items-center mb-10" for="kt_create_account_form_account_type_personal">
+                          <input type="radio" class="btn-check" name="transac" value="factura" checked="checked" id="kt_create_account_form_transac_personal" />
+                          <label class="btn btn-outline btn-outline-dashed btn-active-light-primary p-7 d-flex align-items-center mb-10" for="kt_create_account_form_transac_personal">
                             <!--begin::Svg Icon | path: /var/www/preview.keenthemes.com/kt-products/docs/metronic/html/releases/2022-12-26-231111/core/html/src/media/icons/duotune/general/gen005.svg-->
                             <span class="svg-icon svg-icon-muted svg-icon-2hx">
                               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -211,8 +212,34 @@
                         <!--begin::Col-->
                         <div class="col-lg-6">
                           <!--begin::Option-->
-                          <input type="radio" class="btn-check" name="account_type" value="corporate" id="kt_create_account_form_account_type_corporate" />
-                          <label class="btn btn-outline btn-outline-dashed btn-active-light-primary p-7 d-flex align-items-center" for="kt_create_account_form_account_type_corporate">
+                          <input type="radio" class="btn-check" name="transac" value="factura_tae" id="kt_create_account_form_transac_TAE" />
+                          <label class="btn btn-outline btn-outline-dashed btn-active-light-primary p-7 d-flex align-items-center mb-10" for="kt_create_account_form_transac_TAE">
+                            <!--begin::Svg Icon | path: /var/www/preview.keenthemes.com/kt-products/docs/metronic/html/releases/2022-12-26-231111/core/html/src/media/icons/duotune/general/gen005.svg-->
+                            <span class="svg-icon svg-icon-muted svg-icon-2hx">
+                              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path opacity="0.3" d="M19 22H5C4.4 22 4 21.6 4 21V3C4 2.4 4.4 2 5 2H14L20 8V21C20 21.6 19.6 22 19 22ZM12.5 18C12.5 17.4 12.6 17.5 12 17.5H8.5C7.9 17.5 8 17.4 8 18C8 18.6 7.9 18.5 8.5 18.5L12 18C12.6 18 12.5 18.6 12.5 18ZM16.5 13C16.5 12.4 16.6 12.5 16 12.5H8.5C7.9 12.5 8 12.4 8 13C8 13.6 7.9 13.5 8.5 13.5H15.5C16.1 13.5 16.5 13.6 16.5 13ZM12.5 8C12.5 7.4 12.6 7.5 12 7.5H8C7.4 7.5 7.5 7.4 7.5 8C7.5 8.6 7.4 8.5 8 8.5H12C12.6 8.5 12.5 8.6 12.5 8Z" fill="currentColor" />
+                                <rect x="7" y="17" width="6" height="2" rx="1" fill="currentColor" />
+                                <rect x="7" y="12" width="10" height="2" rx="1" fill="currentColor" />
+                                <rect x="7" y="7" width="6" height="2" rx="1" fill="currentColor" />
+                                <path d="M15 8H20L14 2V7C14 7.6 14.4 8 15 8Z" fill="currentColor" />
+                              </svg>
+                            </span>
+                            <!--end::Svg Icon-->
+                            <!--begin::Info-->
+                            <span class="d-block fw-semibold text-start">
+                              <span class="text-dark fw-bold d-block fs-4 mb-2"> Factura Tiempo Aire </span>
+                              <span class="text-muted fw-semibold fs-6">Facturación de tiempo aire Telcel, AT&T, Bait y más. Tenga a la mano su ticket de compra</span>
+                            </span>
+                            <!--end::Info-->
+                          </label>
+                          <!--end::Option-->
+                        </div>
+                        <!--end::Col-->
+                        <!--begin::Col-->
+                        <div class="col-lg-12">
+                          <!--begin::Option-->
+                          <input type="radio" class="btn-check" name="transac" value="corporate" id="kt_create_account_form_transac_corporate" />
+                          <label class="btn btn-outline btn-outline-dashed btn-active-light-primary p-7 d-flex align-items-center" for="kt_create_account_form_transac_corporate">
                             <!--begin::Svg Icon | path: icons/duotune/finance/fin006.svg-->
                             <a href="/cfdi/consulta">
                             <span class="svg-icon svg-icon-3x me-5">
@@ -368,34 +395,51 @@
                       <!--end::Notice-->
                     </div>
                     <!--end::Heading-->
-                    <!--begin::Input group-->
+                    <div class="factura">
                     <div class="row mb-10">
                       <div class="col-6">
                         <label class="form-label required">Número de tienda</label>
-                        <input name="txtNumTienda" class="form-control form-control-lg form-control-solid" autocomplete="off"/>
+                        <input name="txtNumTienda" class="form-control form-control-lg form-control-solid ticket" autocomplete="off"/>
                       </div>
                       <div class="col-6">
                         <label class="form-label required">Número de caja</label>
-                        <input name="txtNumCaja" class="form-control form-control-lg form-control-solid" autocomplete="off"/>
+                        <input name="txtNumCaja" class="form-control form-control-lg form-control-solid ticket" autocomplete="off"/>
                       </div>
                     </div>
                     <!--end::Input group-->
                     <div class="row mb-10">
                       <div class="col-6">
                         <label class="form-label required">Número de Ticket</label>
-                        <input name="txtNumTicket" class="form-control form-control-lg form-control-solid" autocomplete="off"/>
+                        <input name="txtNumTicket" class="form-control form-control-lg form-control-solid ticket" autocomplete="off"/>
                       </div>
                       <div class="col-6">
                         <label class="form-label required">Monto de la compra</label>
-                        <input name="txtMontoCompra" class="form-control form-control-lg form-control-solid" autocomplete="off"/>
+                        <input name="txtMontoCompra" class="form-control form-control-lg form-control-solid ticket" autocomplete="off"/>
                       </div>
+                    </div>                    
                     </div>
+
+                    <div class="factura-tae">
+                      <div class="row mb-10">
+                        <div class="col-6">
+                          <label class="form-label required">Número de Teléfono</label>
+                          <input name="txtNumTelefono" id="txtNumTelefono" class="form-control form-control-lg form-control-solid ticket_tae" autocomplete="off"/>
+                        </div>
+                        <div class="col-6">
+                          <label class="form-label required">Número de Autorización</label>
+                          <input name="txtNumAutorizacion" id="txtNumAutorizacion" class="form-control form-control-lg form-control-solid ticket_tae" autocomplete="off"/>
+                        </div>
+                      </div> 
+                    </div>
+
                     <div class="row mb-10">
                       <div class="col-6">
                         <label class="form-label required">Fecha de compra</label>
                         <input name="txtFechaCompra" class="form-control form-control-lg form-control-solid" autocomplete="off"/>
                       </div>
                     </div>
+                    <!--begin::Input group-->
+                    
                     <!--begin::Input group-->
                     <div class="row mb-10">
                       <!--begin::Label-->

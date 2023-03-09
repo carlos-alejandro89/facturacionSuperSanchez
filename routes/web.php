@@ -10,6 +10,8 @@ Route::group(["prefix"=>'autofactura'],function(){
   Route::post('getUsoCFDI','solicitudFacturaController@getUsoCFDI');
   Route::post('solicitaCFDI','solicitudFacturaController@solicitaCFDI');
   Route::post('ticket/validar','solicitudFacturaController@validarTicket');
+  Route::post('tae/validar','facturacionTaeController@validarTae');
+  Route::post('tae/generar-factura','facturacionTaeController@generarFactura');
   Route::post('clientes/get-info','clientesController@getInfo');
 });
 

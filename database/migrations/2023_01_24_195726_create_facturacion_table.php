@@ -37,6 +37,8 @@ class CreateFacturacionTable extends Migration
             $table->string('correo_electronico');
             $table->string('file_xml')->nullable();
             $table->string('file_pdf')->nullable();
+            $table->string('tae_autorizacion')->nullable();
+            $table->string('tae_num_telefono')->nullable();
             $table->date('fecha_solicitud');
             $table->date('fecha_atencion')->nullable();
             $table->string('uniqid');

@@ -20,22 +20,48 @@ var KTCreateAccount = function() {
                         KTUtil.scrollTop()
                     }))*/
                     if(t == "Valid"){
+                        var transac = $('input[name="transac"]:checked').val();
+                        if(e.getCurrentStepIndex() == 1){                           
+
+                            if(transac == 'factura_tae'){
+                                $(".factura").addClass('d-none');
+                                $(".factura-tae").removeClass('d-none');
+                                $("#txtNumTelefono").val('');
+                                $("#txtNumAutorizacion").val('');
+                                $(".ticket").val('000');
+                            }else{
+                                $(".factura-tae").addClass('d-none');
+                                $(".factura").removeClass('d-none');
+                                $("#txtNumTelefono").val('0000000000');
+                                $("#txtNumAutorizacion").val('00000000');
+                                $(".ticket").val('');
+                            }
+                            
+                        }
                         if(e.getCurrentStepIndex() == 3){
-                            console.log('validando ticket');
+                            //console.log('validando ticket');
 
                             var _token      = $('input[name="_token"]').val();
-							var numTienda   = $('input[name="txtNumTienda"]').val();
-							var numCaja     = $('input[name="txtNumCaja"]').val();
-							var numTicket   = $('input[name="txtNumTicket"]').val();
-							var fechaTicket = $('input[name="txtFechaCompra"]').val();
-                            var montoTicket = $('input[name="txtMontoCompra"]').val();
+                            if(transac == 'factura'){
+                                var numTienda   = $('input[name="txtNumTienda"]').val();
+                                var numCaja     = $('input[name="txtNumCaja"]').val();
+                                var numTicket   = $('input[name="txtNumTicket"]').val();
+                                var fechaTicket = $('input[name="txtFechaCompra"]').val();
+                                var montoTicket = $('input[name="txtMontoCompra"]').val();
+                                var endpoint = '/autofactura/ticket/validar';
+                                var data_ = {_token: _token, numTienda: numTienda, numCaja: numCaja, numTicket:numTicket, fechaTicket:fechaTicket, montoTicket:montoTicket};
+                            }else{
+                                var endpoint = '/autofactura/tae/validar';
+                                var numTelefono = $('input[name="txtNumTelefono"]').val();
+                                var numAutorizacion = $('input[name="txtNumAutorizacion"]').val();
+                                var data_ = {_token: _token, numTelefono: numTelefono, numAutorizacion:numAutorizacion, fechaTicket:fechaTicket};
+                            }
+							
 
                             $.ajax({
-                                url:'/autofactura/ticket/validar',
+                                url: endpoint,
                                 type:'post',
-                                data:{_token: _token, numTienda, numCaja, numTicket, fechaTicket, montoTicket:montoTicket},
-                            
-                            
+                                data: data_,
                                 beforeSend:()=>{
 
                                 },
@@ -186,6 +212,36 @@ var KTCreateAccount = function() {
                             }
                         }
                     },
+                    txtNumTelefono: {
+                        validators: {
+                            notEmpty: {
+                                message: "Introduzca número de teléfono"
+                            },
+                            digits: {
+                                message: "Este campo solo admite números"
+                            },
+                            stringLength: {
+                                min: 10,
+                                max: 10,
+                                message: "Introduzca los 10 digitos del número de teléfono"
+                            }
+                        }
+                    },
+                    txtNumAutorizacion: {
+                        validators: {
+                            notEmpty: {
+                                message: "Introduzca número de autorización"
+                            },
+                            digits: {
+                                message: "Este campo solo admite números"
+                            },
+                            stringLength: {
+                                min: 6,
+                                max: 8,
+                                message: "El valor de este campo es de 6 a 8 caracteres"
+                            }
+                        }
+                    },
                     txtFechaCompra: {
                         validators: {
                             notEmpty: {
@@ -238,9 +294,11 @@ var KTCreateAccount = function() {
                         //o.removeAttribute("data-kt-indicator"), o.disabled = !1, r.goNext()
                         var formData = new FormData(document.getElementById("kt_create_account_form"));
                       // guardarImplementacion();
+                      var transac = $('input[name="transac"]:checked').val();
+                      var endpoint = (transac == 'factura') ? '/autofactura/solicitaCFDI' : '/autofactura/tae/generar-factura';
                        
                         $.ajax({
-                            url:'/autofactura/solicitaCFDI',
+                            url: endpoint,
                             type:'post',
                             data: formData,
                             processData: false,  
