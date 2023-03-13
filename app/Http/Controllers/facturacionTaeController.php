@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\facturacion;
 use App\Models\clientes;
+use App\Models\sat_regimen_fiscal;
+use App\Models\sat_uso_cfdi;
 use Carbon\Carbon;
 
 class facturacionTaeController extends Controller
@@ -19,7 +21,37 @@ class facturacionTaeController extends Controller
     }
 
     public function generarFactura(Request $r){
-        $rfc = strtoupper($r->txtRFC);
+        $rfc = strtoupper(trim($r->txtRFC));
+
+        $regimenReceptor = sat_regimen_fiscal::where('id',$r->cmbRegimenFiscal)->first();
+        $usoCFDI = sat_uso_cfdi::where('id',$r->cmbUsoCFDI)->first();
+
+        $dataForCFDI = ["Prefix" => "TAE", 
+                        "FolioInterno" => "1", 
+                        "CveMetodoPago" => "PUE", 
+                        "MetodoPago" => "PAGO EN UNA SOLA EXHIBICION", 
+                        "CveFormaPago" => "01", 
+                        "FormaPago" => "EFECTIVO",
+                        "Subtotal" => 100,
+                        "Descuentos" => 0,
+                        "Impuestos" => 16,
+                        "Total" => 116,
+                        "RfcEmisor" => ENV("CFDI_RFC"),
+                        "Emisor" => ENV("CFDI_EMISOR"),
+                        "CveRegimenEmisor" => ENV("CFDI_CVE_REGIMEN"),
+                        "RegimenEmisor" => ENV("CFDI_REGIMEN"),
+                        "LugarExpedicion" => ENV("CFDI_LUGAR_EXPEDICION"),
+                        "RfcReceptor" => $rfc,
+                        "Receptor" => strtoupper(trim($r->txtRazonSocial)),
+                        "CveRegimenReceptor" => $regimenReceptor->cve_regimen,
+                        "RegimenReceptor" => $regimenReceptor->desc_regimen,
+                        "DomicilioFiscalReceptor" => $r->txtCodigoPostal,
+                        "CveUsoCFDI" => $usoCFDI->cve_uso_cfdi,
+                        "UsoCFDI" => $usoCFDI->desc_uso_cfdi
+                        ];
+
+        return response()->json($dataForCFDI);
+        
         $cliente = clientes::where('rfc',$rfc);
 
         $cliente = (!$cliente->exists()) ? new clientes : $cliente->first();
